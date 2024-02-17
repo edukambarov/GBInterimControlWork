@@ -66,7 +66,7 @@ public class Menu {
                             if (yy > currentYear || yy < 1973) {
                                 System.out.println("Birthday should not later than current date.\n" +
                                         "Year should not be less than 1973.");
-                                continue;
+                                break;
                             }
                             System.out.println("Enter the month of birth (1 - 12): ");
                             try {

@@ -3,10 +3,7 @@ package Classes;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-
 public abstract class Animal {
-
-
     static int ID = 0;
     final int id;
 
@@ -15,13 +12,11 @@ public abstract class Animal {
     protected String name;
 
     protected ArrayList<String> skills;
-
     public Animal(Calendar birthday, String name) {
         this.id = ++ID;
         this.birthday = birthday;
         this.name = name;
     }
-
     public Animal(Calendar birthday, String name, ArrayList<String> skills) {
         this.id = ++ID;
         this.birthday = birthday;
@@ -36,15 +31,12 @@ public abstract class Animal {
     public int getId() {
         return id;
     }
-
     public Calendar getBirthday() {
         return birthday;
     }
-
     public String getName() {
         return name;
     }
-
     @Override
     public String toString() {
         return  this.getClass().toString().
@@ -59,7 +51,6 @@ public abstract class Animal {
 //                    replace("]","")
                 ;
     }
-
     public void learnCommand(String cmd) {
         ArrayList<String> availableCommands = new ArrayList<String>();
         if (availableCommands.contains(cmd)) {
@@ -77,5 +68,4 @@ public abstract class Animal {
         }
         else  System.out.println("Unknown or inapplicable command.");
     }
-
 }
