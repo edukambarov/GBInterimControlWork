@@ -40,6 +40,8 @@ public class Menu {
                                 "\nEnter 14 - horse" +
                                 "\nEnter 15 - donkey" +
                                 "\nEnter 16 - camel");
+                        Stream.generate(() -> "=").limit(50).forEach(System.out::print);
+                        System.out.println();
                         int innerMenuChoice;
                         try {
                             innerMenuChoice = scanner.nextInt();
