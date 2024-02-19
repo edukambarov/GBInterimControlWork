@@ -1,4 +1,4 @@
-package Program;
+package Model;
 
 import Classes.*;
 
@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.stream.Stream;
 
-public class Program {
+public class Model {
     private static ArrayList<Animal> animals;
-    public Program(){
+    public Model(){
         animals = new ArrayList<>();
     }
     public void addCat(Calendar birthday, String name, ArrayList<String> skills) {
@@ -41,12 +41,12 @@ public class Program {
     }
 
     public void showAnimals () {
-        Stream.generate(() -> "*").limit(50).forEach(System.out::print);
+        Stream.generate(() -> "*").limit(75).forEach(System.out::print);
         System.out.println();
         for (Animal animal: animals) {
             System.out.println(animal);
         }
-        Stream.generate(() -> "*").limit(50).forEach(System.out::print);
+        Stream.generate(() -> "*").limit(75).forEach(System.out::print);
         System.out.println();
     }
     public void showSkills (int inputID){

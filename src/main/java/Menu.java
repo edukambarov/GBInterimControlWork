@@ -1,4 +1,4 @@
-import Program.Program;
+import Model.Model;
 
 import java.time.LocalDateTime;
 import java.util.stream.Stream;
@@ -12,7 +12,7 @@ import java.util.Arrays;
 public class Menu {
     public static void main (String[]args){
 
-        Program program = new Program();
+        Model program = new Model();
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
@@ -33,6 +33,8 @@ public class Menu {
             } finally {
                 switch (mainMenuChoice) {
                     case 1:
+                        Stream.generate(() -> "=").limit(50).forEach(System.out::print);
+                        System.out.println();
                         System.out.println("Choose the animal to be registered: " +
                                 "\nEnter 11 - cat" +
                                 "\nEnter 12 - dog" +
