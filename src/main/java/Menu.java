@@ -63,7 +63,7 @@ public class Menu {
                                 yy = scanner.nextInt();
                             } catch (InputMismatchException e) {
                                 System.out.println("Do enter number next time.");
-                                continue;
+                                break;
                             }
                             LocalDateTime now = LocalDateTime.now();
                             int currentYear = now.getYear();
@@ -77,7 +77,7 @@ public class Menu {
                                 mm = scanner.nextInt();
                             } catch (InputMismatchException e) {
                                 System.out.println("Do enter number next time.");
-                                continue;
+                                break;
                             }
                             int currentMonth = now.getMonthValue();
                             if (yy == currentYear && mm > currentMonth || mm < 1 || mm > 12) {
