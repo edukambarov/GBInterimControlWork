@@ -4,8 +4,19 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public abstract class Animal {
-    static int ID = 0;
+
     final int id;
+    class Counter {
+        private static int COUNTER = 0;
+        private final int counter;
+
+        public Counter() {
+            counter = ++COUNTER ;
+        }
+        public int getId() {
+            return counter;
+        }
+    }
 
     protected Calendar birthday;
 
@@ -13,12 +24,14 @@ public abstract class Animal {
 
     protected ArrayList<String> skills;
     public Animal(Calendar birthday, String name) {
-        this.id = ++ID;
+        Counter counter = new Counter();
+        this.id = counter.getId();
         this.birthday = birthday;
         this.name = name;
     }
     public Animal(Calendar birthday, String name, ArrayList<String> skills) {
-        this.id = ++ID;
+        Counter counter = new Counter();
+        this.id = counter.getId();
         this.birthday = birthday;
         this.name = name;
         this.skills = skills;
