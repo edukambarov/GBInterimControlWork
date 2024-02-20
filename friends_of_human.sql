@@ -1,5 +1,4 @@
--- DROP DATABASE friends_of_human;
-
+DROP DATABASE IF EXISTS friends_of_human;
 CREATE DATABASE friends_of_human;
 
 USE friends_of_human;
@@ -246,17 +245,61 @@ camels (name, birthday, skills)
 VALUES
 ("Abdul","2019-04-27","carry load, sit");
 
-SELECT * FROM animals;
-SELECT * FROM pets;
-SELECT * FROM pack_animals;
+DELETE 
+FROM pack_animals pa
+WHERE pa.subclass_id = 3;
 
+CREATE TABLE horses_and_donkeys AS (
+SELECT * FROM horses UNION ALL
+SELECT * FROM donkeys
+);
+
+
+SELECT 
+*, 
+TIMESTAMPDIFF(MONTH,hamsters.birthday,NOW()) AS age_in_months
+FROM
+hamsters
+WHERE 
+TIMESTAMPDIFF(MONTH,hamsters.birthday,NOW()) > 12 
+AND 
+TIMESTAMPDIFF(MONTH,hamsters.birthday,NOW()) < 37
+UNION
+SELECT 
+*, 
+TIMESTAMPDIFF(MONTH,cats.birthday,NOW()) AS age_in_months
+FROM
+cats
+WHERE 
+TIMESTAMPDIFF(MONTH,cats.birthday,NOW()) > 12 
+AND 
+TIMESTAMPDIFF(MONTH,cats.birthday,NOW()) < 37
+UNION
+SELECT 
+*, 
+TIMESTAMPDIFF(MONTH,dogs.birthday,NOW()) AS age_in_months
+FROM
+dogs
+WHERE 
+TIMESTAMPDIFF(MONTH,dogs.birthday,NOW()) > 12 
+AND 
+TIMESTAMPDIFF(MONTH,dogs.birthday,NOW()) < 37
+UNION
+SELECT 
+*, 
+TIMESTAMPDIFF(MONTH,horses_and_donkeys.birthday,NOW()) AS age_in_months
+FROM
+horses_and_donkeys
+WHERE 
+TIMESTAMPDIFF(MONTH,horses_and_donkeys.birthday,NOW()) > 12 
+AND 
+TIMESTAMPDIFF(MONTH,horses_and_donkeys.birthday,NOW()) < 37;
+
+CREATE TABLE all_the_animals AS (
 SELECT * FROM cats UNION ALL
 SELECT * FROM dogs UNION ALL
 SELECT * FROM hamsters UNION ALL
-SELECT * FROM horses UNION ALL
-SELECT * FROM donkeys UNION ALL
-SELECT * FROM camels;
+SELECT * FROM horses_and_donkeys
+);
 
-
-
-
+SELECT * FROM all_the_animals;
