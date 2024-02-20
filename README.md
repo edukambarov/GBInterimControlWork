@@ -26,8 +26,9 @@
 
 ## Решение:
 
-![Это принскрин 2]((blob/main/LinuxPart/p2.bmp).
-![Это принскрин 1]((https://github.com/edukambarov/GBInterimControlWork/blob/main/LinuxPart/p1.bmp).
+![Это принскрин 2](blob/main/LinuxPart/p2.jpg).
+
+![Это принскрин 1](https://github.com/edukambarov/GBInterimControlWork/blob/main/LinuxPart/p1.jpg).
 
 
 
