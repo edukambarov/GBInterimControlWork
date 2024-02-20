@@ -21,7 +21,7 @@ public class Menu {
                     "\nenter 2 to show list of (all) animals," +
                     "\nenter 3 to show the animal's skills," +
                     "\nenter 4 to teach the animal a new command," +
-                    "\nenter any other key for exit.");
+                    "\nenter any letter key for exit.");
             Stream.generate(() -> "=").limit(50).forEach(System.out::print);
             System.out.println();
             int mainMenuChoice = 0;
@@ -152,15 +152,17 @@ public class Menu {
                         System.out.println("Enter animal's ID: ");
                         int pointedID = scanner.nextInt();
                         program.findListOfCommands(pointedID);
-                        String inputCommand = scanner.next();
-                        program.teachCommand(pointedID, inputCommand);
+                        int quantityOfAnimals = program.getAnimalsLength();
+                        if (!(quantityOfAnimals == 0)) {
+                            String inputCommand = scanner.next();
+                            program.teachCommand(pointedID, inputCommand);
+                        }
                         break;
                     default:
-                        System.out.println("Thank you for using our application.");
+                        System.out.println();
                         break;
                 }
             }
         }
     }
 }
-

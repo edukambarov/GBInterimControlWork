@@ -50,7 +50,9 @@ public class Model {
         System.out.println();
     }
     public void showSkills (int inputID){
-        for (Animal animal: animals) {
+        if (animals.isEmpty()) System.out.println("No animals are registered yet.");
+        else {
+            for (Animal animal: animals) {
             int animalID = animal.getId();
             if (animalID == inputID) {
                 String skillsOfChosen = animal.getSkills().toString().
@@ -64,28 +66,33 @@ public class Model {
                 }
             }
             else System.out.println("Not animal with this ID was found.");
+            }
         }
     }
+
     public void findListOfCommands(int inputID) {
-        for (Animal animal: animals) {
-            int animalID = animal.getId();
-            Class relatedClass = animal.getClass();
-            Class apprInterface = null;
-            if (animalID == inputID) {
-                Class[] relatedInterfaces = relatedClass.getInterfaces();
-                if (relatedInterfaces.length == 1) {
-                    apprInterface = relatedInterfaces[0];
-                    ArrayList<String> availableCommands = new ArrayList<String>();
-                    for (Method method : apprInterface.getDeclaredMethods()) {
-                        availableCommands.add(method.getName());
+        if (animals.isEmpty()) System.out.println("No animals are registered yet.");
+        else {
+            for (Animal animal: animals) {
+                int animalID = animal.getId();
+                Class relatedClass = animal.getClass();
+                Class apprInterface = null;
+                if (animalID == inputID) {
+                    Class[] relatedInterfaces = relatedClass.getInterfaces();
+                    if (relatedInterfaces.length == 1) {
+                        apprInterface = relatedInterfaces[0];
+                        ArrayList<String> availableCommands = new ArrayList<String>();
+                        for (Method method : apprInterface.getDeclaredMethods()) {
+                            availableCommands.add(method.getName());
+                        }
+                        System.out.println("Choose one of the commands and enter it: \n" +
+                                availableCommands.toString().
+                                        replace("[","").
+                                        replace("]",""));
                     }
-                    System.out.println("Choose one of the commands and enter it: \n" +
-                                    availableCommands.toString().
-                                    replace("[","").
-                                    replace("]",""));
                 }
+                else System.out.println("Not animal with this ID was found.");
             }
-            else System.out.println("Not animal with this ID was found.");
         }
     }
 
@@ -96,6 +103,10 @@ public class Model {
                 animal.learnCommand(command);
             }
         }
+    }
+
+    public int getAnimalsLength() {
+        return animals.size();
     }
 }
 
