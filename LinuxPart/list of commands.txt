@@ -1,0 +1,34 @@
+  1  cat > pets.txt
+
+  2  cat > pack_animals.txt
+
+  3  cat pets.txt pack_animals.txt > friends_of_human.txt
+
+  4  cat friends_of_human.txt
+
+  5  mkdir friends_of_human
+
+  6  mv friend_of_human.txt friends_of_human
+
+  7  cd friends_of_human/
+
+  8  ll
+
+  9  cat friends_of_human.txt 
+
+  10  cd /home/kea78/
+
+  11  sudo apt update
+
+  12  sudo apt install mysql-server-8.0
+
+  13  sudo mysql
+
+  14  wget https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-j_8.3.0-1ubuntu22.04_all.deb
+
+  15  sudo dpkg -i mysql-connector-j_8.3.0-1ubuntu22.04_all.deb
+
+  16  sudo dpkg -r mysql-connector-j_8.3.0-1ubuntu22.04_all.deb
+
+  17  history
+
