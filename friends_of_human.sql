@@ -1,8 +1,14 @@
 DROP DATABASE IF EXISTS friends_of_human;
+-- 7. В подключенном MySQL репозитории создать базу данных “Друзья человека”
+-- START
 CREATE DATABASE friends_of_human;
 
 USE friends_of_human;
+-- 7. В подключенном MySQL репозитории создать базу данных “Друзья человека”
+-- DONE
 
+-- 8. Создать таблицы с иерархией из диаграммы в БД
+-- START
 DROP TABLE IF EXISTS animals;
 CREATE TABLE animals 
 (
@@ -133,16 +139,24 @@ CREATE TABLE camels
     FOREIGN KEY (class_id) REFERENCES animals(class_id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (subclass_id) REFERENCES pack_animals(subclass_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+-- 8. Создать таблицы с иерархией из диаграммы в БД
+-- DONE
 
+/*
+ДОПОЛНИТЕЛЬНО:
+ввёл секвенцию и создал триггеры, 
+чтобы получить единый счётчик животных (по аналогии с п.15 контрольной)
+START
+*/
 DROP TABLE IF EXISTS sequence;
 CREATE TABLE sequence (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL
 );
 
 DELIMITER //
-CREATE TRIGGER cats_BEFORE_INSERT
+CREATE TRIGGER cats_use_id_sequence_BEFORE_INSERT
   BEFORE INSERT ON 
-    cats
+    cats 
   FOR EACH ROW
 BEGIN
   INSERT INTO sequence SET id= DEFAULT;
@@ -151,7 +165,7 @@ END//
 DELIMITER ;
 
 DELIMITER //
-CREATE TRIGGER dogs_BEFORE_INSERT
+CREATE TRIGGER dogs_use_id_sequence_BEFORE_INSERT
   BEFORE INSERT ON 
     dogs
   FOR EACH ROW
@@ -162,7 +176,7 @@ END//
 DELIMITER ;
 
 DELIMITER //
-CREATE TRIGGER hamsters_BEFORE_INSERT
+CREATE TRIGGER hamsters_use_id_sequence_BEFORE_INSERT
   BEFORE INSERT ON 
     hamsters
   FOR EACH ROW
@@ -173,7 +187,7 @@ END//
 DELIMITER ;
 
 DELIMITER //
-CREATE TRIGGER horses_BEFORE_INSERT
+CREATE TRIGGER horses_use_id_sequence_BEFORE_INSERT
   BEFORE INSERT ON 
     horses
   FOR EACH ROW
@@ -184,7 +198,7 @@ END//
 DELIMITER ;
 
 DELIMITER //
-CREATE TRIGGER donkeys_BEFORE_INSERT
+CREATE TRIGGER donkeys_use_id_sequence_BEFORE_INSERT
   BEFORE INSERT ON 
     donkeys
   FOR EACH ROW
@@ -195,7 +209,7 @@ END//
 DELIMITER ;
 
 DELIMITER //
-CREATE TRIGGER camels_BEFORE_INSERT
+CREATE TRIGGER camels_use_id_sequence_BEFORE_INSERT
   BEFORE INSERT ON 
     camels
   FOR EACH ROW
@@ -204,7 +218,18 @@ BEGIN
   SET NEW.id = LAST_INSERT_ID();
 END//
 DELIMITER ;
+/*
+ДОПОЛНИТЕЛЬНО:
+ввёл секвенцию и создал триггеры, 
+чтобы получить единый счётчик животных (по аналогии с п.15 контрольной)
+-- DONE
+*/
 
+/*
+9. Заполнить низкоуровневые таблицы именами(животных), командами,
+которые они выполняют и датами рождения.
+-- START
+*/
 INSERT INTO
 cats (name, birthday, skills)
 VALUES
@@ -244,7 +269,18 @@ INSERT INTO
 camels (name, birthday, skills)
 VALUES
 ("Abdul","2019-04-27","carry load, sit");
+/*
+9. Заполнить низкоуровневые таблицы именами(животных), командами,
+которые они выполняют и датами рождения.
+-- DONE
+*/
 
+/*
+10. Удалив из таблицы верблюдов,
+ т.к. верблюдов решили перевезти в другой питомник на зимовку.
+Объединить таблицы лошади, и ослы в одну таблицу.
+--START
+*/
 DELETE 
 FROM pack_animals pa
 WHERE pa.subclass_id = 3;
@@ -253,53 +289,53 @@ CREATE TABLE horses_and_donkeys AS (
 SELECT * FROM horses UNION ALL
 SELECT * FROM donkeys
 );
+/*
+10. Удалив из таблицы верблюдов,
+ т.к. верблюдов решили перевезти в другой питомник на зимовку.
+Объединить таблицы лошади, и ослы в одну таблицу.
+-- DONE
+*/
 
-
-SELECT 
-*, 
-TIMESTAMPDIFF(MONTH,hamsters.birthday,NOW()) AS age_in_months
-FROM
-hamsters
-WHERE 
-TIMESTAMPDIFF(MONTH,hamsters.birthday,NOW()) > 12 
-AND 
-TIMESTAMPDIFF(MONTH,hamsters.birthday,NOW()) < 37
-UNION
-SELECT 
-*, 
-TIMESTAMPDIFF(MONTH,cats.birthday,NOW()) AS age_in_months
-FROM
-cats
-WHERE 
-TIMESTAMPDIFF(MONTH,cats.birthday,NOW()) > 12 
-AND 
-TIMESTAMPDIFF(MONTH,cats.birthday,NOW()) < 37
-UNION
-SELECT 
-*, 
-TIMESTAMPDIFF(MONTH,dogs.birthday,NOW()) AS age_in_months
-FROM
-dogs
-WHERE 
-TIMESTAMPDIFF(MONTH,dogs.birthday,NOW()) > 12 
-AND 
-TIMESTAMPDIFF(MONTH,dogs.birthday,NOW()) < 37
-UNION
-SELECT 
-*, 
-TIMESTAMPDIFF(MONTH,horses_and_donkeys.birthday,NOW()) AS age_in_months
-FROM
-horses_and_donkeys
-WHERE 
-TIMESTAMPDIFF(MONTH,horses_and_donkeys.birthday,NOW()) > 12 
-AND 
-TIMESTAMPDIFF(MONTH,horses_and_donkeys.birthday,NOW()) < 37;
-
+/*
+12. Объединить все таблицы в одну, при этом сохраняя поля, указывающие на
+прошлую принадлежность к старым таблицам
+-- START
+*/
 CREATE TABLE all_the_animals AS (
 SELECT * FROM cats UNION ALL
 SELECT * FROM dogs UNION ALL
 SELECT * FROM hamsters UNION ALL
 SELECT * FROM horses_and_donkeys
 );
+/*
+12. Объединить все таблицы в одну, при этом сохраняя поля, указывающие на
+прошлую принадлежность к старым таблицам
+-- DONE (Комментарий: class_id и subclass_id и есть те самые поля, указывающие на
+прошлую принадлежность к старым таблицам) 
+*/
 
 SELECT * FROM all_the_animals;
+
+/*
+11. Создать новую таблицу “молодые животные” в которую попадут все
+животные старше 1 года, но младше 3 лет и в отдельном столбце с точностью
+до месяца подсчитать возраст животных в новой таблице
+--START
+*/
+CREATE TABLE young_animals AS (
+SELECT 
+*, 
+TIMESTAMPDIFF(MONTH,birthday,NOW()) AS age_in_months
+FROM
+all_the_animals
+WHERE 
+TIMESTAMPDIFF(MONTH,birthday,NOW()) >= 12 
+AND 
+TIMESTAMPDIFF(MONTH,birthday,NOW()) <= 36);
+/*
+11. Создать новую таблицу “молодые животные” в которую попадут все
+животные старше 1 года, но младше 3 лет и в отдельном столбце с точностью
+до месяца подсчитать возраст животных в новой таблице
+-- DONE
+*/
+
