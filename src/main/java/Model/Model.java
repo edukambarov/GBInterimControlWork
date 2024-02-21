@@ -68,7 +68,7 @@ public class Model {
                 }
             }
         }
-        if (!IfAnimalExists) System.out.println("Not animal with this ID was found.");
+        if (!IfAnimalExists) System.out.println("No animal with this ID was found.");
     }
 
     public void findListOfCommands(int inputID) {
@@ -92,7 +92,7 @@ public class Model {
                                 availableCommands.toString().
                                         replace("[", "").
                                         replace("]", ""));
-                    } else System.out.println("No animal with this ID was found.");
+                    }
                 }
             }
         }
