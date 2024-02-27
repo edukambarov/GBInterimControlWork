@@ -81,6 +81,7 @@ public class Model {
                 Class apprInterface = null;
                 if (animalID == inputID) {
                     IfAnimalExists = true;
+                    // need it to get list of appropriate method for the animal of selected class from interface
                     Class[] relatedInterfaces = relatedClass.getInterfaces();
                     if (relatedInterfaces.length == 1) {
                         apprInterface = relatedInterfaces[0];
